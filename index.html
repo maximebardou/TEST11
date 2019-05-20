@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="data/Frisedesnergies_2.js"></script>
+        <script>
+        var crs = new L.Proj.CRS('EPSG:3857', '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:6, minZoom:3
+        }).fitBounds([[50.63269699642518,3.854099890098444],[50.662591519537656,3.9290825077781077]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var img_Represtemporels_0 = 'data/Represtemporels_0.png';
+        var img_bounds_Represtemporels_0 = [[50.43075356288374,3.3003709691176253],[51.01665172652394,8.291876381931797]];
+        var layer_Represtemporels_0 = new L.imageOverlay(img_Represtemporels_0, img_bounds_Represtemporels_0);
+        bounds_group.addLayer(layer_Represtemporels_0);
+        map.addLayer(layer_Represtemporels_0);
+        var img_quivalenceenforcehumaine_1 = 'data/quivalenceenforcehumaine_1.png';
+        var img_bounds_quivalenceenforcehumaine_1 = [[50.43075356288374,3.3003709691176253],[51.01665172652394,8.291876381931797]];
+        var layer_quivalenceenforcehumaine_1 = new L.imageOverlay(img_quivalenceenforcehumaine_1, img_bounds_quivalenceenforcehumaine_1);
+        bounds_group.addLayer(layer_quivalenceenforcehumaine_1);
+        map.addLayer(layer_quivalenceenforcehumaine_1);
+        function pop_Frisedesnergies_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Énergie'] !== null ? Autolinker.link(String(feature.properties['Énergie'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Frisedesnergies_2_0(feature) {
+            switch(String(feature.properties['Énergie'])) {
+                case 'Force humaine':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,178,79,1.0)',
+            }
+                    break;
+                case 'Animale':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(102,148,168,1.0)',
+            }
+                    break;
+                case 'Éolien':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(188,208,218,1.0)',
+            }
+                    break;
+                case 'Biomasse':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,165,145,1.0)',
+            }
+                    break;
+                case 'Hydrolique':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(42,111,137,1.0)',
+            }
+                    break;
+                case 'Charbon':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(179,66,72,1.0)',
+            }
+                    break;
+                case 'Gaz':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,66,72,1.0)',
+            }
+                    break;
+                case 'Pétrole':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,124,111,1.0)',
+            }
+                    break;
+                case 'Nucléaire':
+                    return {
+                pane: 'pane_Frisedesnergies_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,173,157,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Frisedesnergies_2');
+        map.getPane('pane_Frisedesnergies_2').style.zIndex = 402;
+        map.getPane('pane_Frisedesnergies_2').style['mix-blend-mode'] = 'darken';
+        var layer_Frisedesnergies_2 = new L.geoJson(json_Frisedesnergies_2, {
+            attribution: '',
+            pane: 'pane_Frisedesnergies_2',
+            onEachFeature: pop_Frisedesnergies_2,
+            style: style_Frisedesnergies_2_0,
+        });
+        bounds_group.addLayer(layer_Frisedesnergies_2);
+        map.addLayer(layer_Frisedesnergies_2);
+        var img_Descriptions_3 = 'data/Descriptions_3.png';
+        var img_bounds_Descriptions_3 = [[50.43075356288374,3.3003709691176253],[51.01665172652394,8.291876381931797]];
+        var layer_Descriptions_3 = new L.imageOverlay(img_Descriptions_3, img_bounds_Descriptions_3);
+        bounds_group.addLayer(layer_Descriptions_3);
+        map.addLayer(layer_Descriptions_3);
+        var img_Illustrations_4 = 'data/Illustrations_4.png';
+        var img_bounds_Illustrations_4 = [[50.43075356288374,3.3003709691176253],[51.01665172652394,8.291876381931797]];
+        var layer_Illustrations_4 = new L.imageOverlay(img_Illustrations_4, img_bounds_Illustrations_4);
+        bounds_group.addLayer(layer_Illustrations_4);
+        map.addLayer(layer_Illustrations_4);
+        var img_Niveaudesocansettempratures_5 = 'data/Niveaudesocansettempratures_5.png';
+        var img_bounds_Niveaudesocansettempratures_5 = [[50.43075356288374,3.3003709691176253],[51.01665172652394,8.291876381931797]];
+        var layer_Niveaudesocansettempratures_5 = new L.imageOverlay(img_Niveaudesocansettempratures_5, img_bounds_Niveaudesocansettempratures_5);
+        bounds_group.addLayer(layer_Niveaudesocansettempratures_5);
+        map.addLayer(layer_Niveaudesocansettempratures_5);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"Niveau des océans et températures": layer_Niveaudesocansettempratures_5,"Illustrations": layer_Illustrations_4,"Descriptions": layer_Descriptions_3,'Frise des énergies<br /><table><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Forcehumaine0.png" /></td><td>Force humaine</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Animale1.png" /></td><td>Animale</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Éolien2.png" /></td><td>Éolien</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Biomasse3.png" /></td><td>Biomasse</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Hydrolique4.png" /></td><td>Hydrolique</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Charbon5.png" /></td><td>Charbon</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Gaz6.png" /></td><td>Gaz</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Pétrole7.png" /></td><td>Pétrole</td></tr><tr><td style="text-align: center;"><img src="legend/Frisedesnergies_2_Nucléaire8.png" /></td><td>Nucléaire</td></tr></table>': layer_Frisedesnergies_2,"Équivalence en force humaine ": layer_quivalenceenforcehumaine_1,"Repères temporels": layer_Represtemporels_0,}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
